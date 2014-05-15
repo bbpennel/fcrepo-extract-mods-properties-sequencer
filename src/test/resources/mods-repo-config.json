@@ -1,0 +1,37 @@
+{
+    "name" : "MODS Extraction Sequencer Test Repository",
+    "jndiName" : "",
+    "workspaces" : {
+        "predefined" : [],
+        "default" : "default",
+        "allowCreation" : true
+    },
+    "storage" : {
+        "cacheName" : "FedoraRepository",
+        "cacheConfiguration" : "${fcrepo.infinispan.cache_configuration:config/testing/infinispan-basic.xml}",
+        "binaryStorage" : {
+            "type" : "cache",
+            "dataCacheName" : "FedoraRepositoryBinaryData",
+            "metadataCacheName" : "FedoraRepositoryMetaData"
+        }
+    },
+    "security" : {
+        "anonymous" : {
+            "roles" : ["readonly","readwrite","admin"],
+            "useOnFailedLogin" : false
+        },
+        "providers" : [
+            { "classname" : "org.fcrepo.http.commons.session.BypassSecurityServletAuthenticationProvider" }
+        ]
+    },
+    "sequencing" : {
+        "removeDerivedContentWithOriginal" : true,
+        "sequencers" : {
+            "MODSSequencer" : {
+                "classname" : "org.fcrepo.sequencer.mods2dc.MODSExtractionSequencer",
+                "pathExpressions" : [ "(//*/)mods/jcr:content[@jcr:data]"]
+            }
+        }
+    },
+    "node-types" : ["fedora-node-types.cnd"]
+}

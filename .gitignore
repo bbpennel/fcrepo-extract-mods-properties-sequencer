@@ -1,0 +1,5 @@
+/target/
+fcrepo4-data
+.settings
+.classpath
+.project
